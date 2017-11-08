@@ -14,9 +14,10 @@ public class WriteRead {
     public static void writeToFile(final String filename,
         final String content) throws IOException {
         final Writer writer = new FileWriterWithEncoding(filename, StandardCharsets.UTF_8);
-        writer.write("Можно записать любую строчку");
+        writer.write("Можно записать любую строчку\n");
         writer.write("Это новая строчка");
-        writer.write("И еще одна");
+        writer.write("И еще одна\n");
+        writer.write(content);
         writer.flush();
         writer.close();
     }
@@ -27,7 +28,10 @@ public class WriteRead {
     }
 
     public static String readFromFile8(String filename) throws IOException {
-        String content = Files.lines(Paths.get(filename), StandardCharsets.UTF_8).collect(Collectors.joining());
+        String content = Files
+            .lines(Paths.get(filename), StandardCharsets.UTF_8)
+            .map(s -> s.replaceAll("а", "9999"))
+            .collect(Collectors.joining());
         return content;
     }
 
